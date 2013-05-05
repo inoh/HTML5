@@ -1,0 +1,26 @@
+<script type="text/javascript">
+$(function(){
+    Pusher.log = function(message) {
+        if (window.console && window.console.log) window.console.log(message);
+    };
+    WEB_SOCKET_DEBUG = true;
+    var pusher = new Pusher('c0adf081cd0f84f6bec8');
+    var channel = pusher.subscribe('sample-channel');
+    channel.bind('sample-event', function(data) {
+        alert(data.message);
+    });
+
+    $("#input").keypress(function(e){
+        if(e.keyCode ==13){
+            $.ajax({
+                type: "POST",
+                url: "/samples",
+                data: "text="+$('#input').val(),
+                success: function() {$("#input").val("");},
+            });
+        }
+    });
+});
+</script>
+
+<input id="input" type="text" />
