@@ -18,6 +18,17 @@
     <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>
     <script>
     var queue = null;
+    var context = new webkitAudioContext();
+
+    /**
+     * 音楽を再生する
+     */
+    function playSound(buffer) {
+      var source = context.createBufferSource(); // creates a sound source
+      source.buffer = buffer;                    // tell the source which sound to play
+      source.connect(context.destination);       // connect the source to the context's destination (the speakers)
+      source.noteOn(0);                          // play the source now
+    }
     /**
      * ロードが終わった後の処理
      */
@@ -29,7 +40,12 @@
           button.id = i;
           button.textContent = "サウンド" + i;
           button.addEventListener('click', function () {
-            queue.getResult("sound" + this.id).play();
+            context.decodeAudioData(queue.getResult("sound" + this.id), function(buffer) {
+              playSound(buffer);
+            }, function (event) {
+              console.log(event);
+            });
+            //queue.getResult("sound" + this.id).play();
           }, false);
           document.body.appendChild(button);
       }
@@ -55,18 +71,18 @@
     queue.addEventListener("error", function (event) {
       console.log(event);
     });
-    queue.loadFile({id: "sound1", src: "audio/sound1.wav"});
-    queue.loadFile({id: "sound2", src: "audio/sound2.wav"});
-    queue.loadFile({id: "sound3", src: "audio/sound3.wav"});
-    queue.loadFile({id: "sound4", src: "audio/sound4.wav"});
-    queue.loadFile({id: "sound5", src: "audio/sound5.wav"});
-    queue.loadFile({id: "sound6", src: "audio/sound6.wav"});
-    queue.loadFile({id: "sound7", src: "audio/sound7.wav"});
-    queue.loadFile({id: "sound8", src: "audio/sound8.wav"});
-    queue.loadFile({id: "sound9", src: "audio/sound9.wav"});
-    queue.loadFile({id: "sound10", src: "audio/sound10.wav"});
-    queue.loadFile({id: "sound11", src: "audio/sound11.wav"});
-    queue.loadFile({id: "sound12", src: "audio/sound12.wav"});      
+    queue.loadFile({id: "sound1", src: "audio/sound1.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound2", src: "audio/sound2.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound3", src: "audio/sound3.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound4", src: "audio/sound4.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound5", src: "audio/sound5.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound6", src: "audio/sound6.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound7", src: "audio/sound7.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound8", src: "audio/sound8.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound9", src: "audio/sound9.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound10", src: "audio/sound10.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound11", src: "audio/sound11.wav", type: createjs.LoadQueue.BINARY});
+    queue.loadFile({id: "sound12", src: "audio/sound12.wav", type: createjs.LoadQueue.BINARY});
 
     </script>
   </body>
