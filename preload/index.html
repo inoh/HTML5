@@ -15,8 +15,22 @@
   <body>
     <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>    
     <script>
+    /**
+     * プレロードする
+     */
     var queue = new createjs.LoadQueue();
-    queue.addEventListener('complete', function () {
+    queue.addEventListener('complete', loadComplate);
+    queue.addEventListener('progress', function (event) {
+      document.getElementById("status").innerHTML = Math.floor(event.loaded * 100);
+    });
+    queue.addEventListener("error", function (event) {
+      console.log(event);
+    });
+      
+    /**
+     * ロードが終わった後の処理
+     */
+    function loadComplate() {
       /* ボタンの表示 */
       for(var i=1;i<=12; i++){
           var button = document.createElement('button'); 
@@ -26,21 +40,15 @@
           document.body.appendChild(button);
       }
       document.body.appendChild(document.createTextNode("★"));
-      /**
-       * 音をならす
-       */
-      function sound(){
-          var s = document.getElementById("sound" + this.id);
-          console.log(s);
-          s.play();
-      }
-    });
-    queue.addEventListener('progress', function (event) {
-      document.getElementById("status").innerHTML = Math.floor(event.loaded * 100);
-    });
-    queue.addEventListener("error", function (event) {
-      console.log(event);
-    });
+    };
+    /**
+     * 音をならす
+     */
+    function sound(){
+        var s = document.getElementById("sound" + this.id);
+        console.log(s);
+        s.play();
+    }
     queue.loadFile({id: "sound1", src: "audio/sound1.wav"});
     queue.loadFile({id: "sound2", src: "audio/sound2.wav"});
     queue.loadFile({id: "sound3", src: "audio/sound3.wav"});
