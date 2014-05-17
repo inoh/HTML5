@@ -10,33 +10,27 @@
         font-size: 1.7em
       }    
     </style>
+    <script src="zepto.min.js"></script>
+    <script src="underscore-min.js"></script>
     <script src="preloadjs-0.4.1.min.js"></script>
   </head>
   <body>
-    <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>    
-    <audio preload="auto" id="sound1" src="audio/sound1.wav"/>
-    <audio preload="auto" id="sound2" src="audio/sound2.wav"/>
-    <audio preload="auto" id="sound3" src="audio/sound3.wav"/>
-    <audio preload="auto" id="sound4" src="audio/sound4.wav"/>
-    <audio preload="auto" id="sound5" src="audio/sound5.wav"/>
-    <audio preload="auto" id="sound6" src="audio/sound6.wav"/>
-    <audio preload="auto" id="sound7" src="audio/sound7.wav"/>
-    <audio preload="auto" id="sound8" src="audio/sound8.wav"/>
-    <audio preload="auto" id="sound9" src="audio/sound9.wav"/>
-    <audio preload="auto" id="sound10" src="audio/sound10.wav"/>
-    <audio preload="auto" id="sound11" src="audio/sound11.wav"/>
-    <audio preload="auto" id="sound12" src="audio/sound12.wav"/>
+    <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>
     <script>
+    var queue = null;
     /**
      * ロードが終わった後の処理
      */
     function loadComplate(event) {
+      queue = event.target;
       /* ボタンの表示 */
       for(var i=1;i<=12; i++){
           var button = document.createElement('button');
           button.id = i;
           button.textContent = "サウンド" + i;
-          button.addEventListener('click', sound, false);
+          button.addEventListener('click', function () {
+            queue.getResult("sound" + this.id).play();
+          }, false);
           document.body.appendChild(button);
       }
       document.body.appendChild(document.createTextNode("★"));
