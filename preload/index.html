@@ -16,6 +16,29 @@
     <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>    
     <script>
     /**
+     * ロードが終わった後の処理
+     */
+    function loadComplate(event) {
+      /* ボタンの表示 */
+      for(var i=1;i<=12; i++){
+          var button = document.createElement('button');
+          button.id = i;
+          button.textContent = "サウンド" + i;
+          button.addEventListener('click', sound, false);
+          document.body.appendChild(button);
+      }
+      document.body.appendChild(document.createTextNode("★"));
+    };
+    /**
+     * 音をならす
+     */
+    function sound(){
+        var s = document.getElementById("sound" + this.id);
+        console.log(s);
+        s.play();
+    }
+
+    /**
      * プレロードする
      */
     var queue = new createjs.LoadQueue();
@@ -38,29 +61,7 @@
     queue.loadFile({id: "sound10", src: "audio/sound10.wav"});
     queue.loadFile({id: "sound11", src: "audio/sound11.wav"});
     queue.loadFile({id: "sound12", src: "audio/sound12.wav"});      
-      
-    /**
-     * ロードが終わった後の処理
-     */
-    function loadComplate() {
-      /* ボタンの表示 */
-      for(var i=1;i<=12; i++){
-          var button = document.createElement('button'); 
-          button.id = i;
-          button.textContent = "サウンド" + i;
-          button.addEventListener('click', sound, false);
-          document.body.appendChild(button);
-      }
-      document.body.appendChild(document.createTextNode("★"));
-    };
-    /**
-     * 音をならす
-     */
-    function sound(){
-        var s = document.getElementById("sound" + this.id);
-        console.log(s);
-        s.play();
-    }
+
     </script>
     <audio preload="auto" id="sound1" src="audio/sound1.wav"/>
     <audio preload="auto" id="sound2" src="audio/sound2.wav"/>
