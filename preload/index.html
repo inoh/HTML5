@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>prelaod demo</title>
+    <style type="text/css">
+      button {    
+        width : 150px;
+        height: 150px;
+        font-size: 1.7em
+      }    
+    </style>
+    <script src="preloadjs-0.4.1.min.js"></script>
+  </head>
+  <body>
+    <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>    
+    <script>
+    var queue = new createjs.LoadQueue();
+    queue.addEventListener('complete', function () {
+      /* ボタンの表示 */
+      for(var i=1;i<=12; i++){
+          var button = document.createElement('button'); 
+          button.id = i;
+          button.textContent = "サウンド" + i;
+          button.addEventListener('click', sound, false);
+          document.body.appendChild(button);
+      }
+      document.body.appendChild(document.createTextNode("★"));
+      /**
+       * 音をならす
+       */
+      function sound(){
+          var s = document.getElementById("sound" + this.id);
+          console.log(s);
+          s.play();
+      }
+    });
+    queue.addEventListener('progress', function (event) {
+      document.getElementById("status").innerHTML = Math.floor(event.loaded * 100);
+    });
+    queue.addEventListener("error", function (event) {
+      console.log(event);
+    });
+    queue.loadFile({id: "sound1", src: "audio/sound1.wav"});
+    queue.loadFile({id: "sound2", src: "audio/sound2.wav"});
+    queue.loadFile({id: "sound3", src: "audio/sound3.wav"});
+    queue.loadFile({id: "sound4", src: "audio/sound4.wav"});
+    queue.loadFile({id: "sound5", src: "audio/sound5.wav"});
+    queue.loadFile({id: "sound6", src: "audio/sound6.wav"});
+    queue.loadFile({id: "sound7", src: "audio/sound7.wav"});
+    queue.loadFile({id: "sound8", src: "audio/sound8.wav"});
+    queue.loadFile({id: "sound9", src: "audio/sound9.wav"});
+    queue.loadFile({id: "sound10", src: "audio/sound10.wav"});
+    queue.loadFile({id: "sound11", src: "audio/sound11.wav"});
+    queue.loadFile({id: "sound12", src: "audio/sound12.wav"});      
+    </script>
+    <audio preload="auto" id="sound1" src="audio/sound1.wav"/>
+    <audio preload="auto" id="sound2" src="audio/sound2.wav"/>
+    <audio preload="auto" id="sound3" src="audio/sound3.wav"/>
+    <audio preload="auto" id="sound4" src="audio/sound4.wav"/>
+    <audio preload="auto" id="sound5" src="audio/sound5.wav"/>
+    <audio preload="auto" id="sound6" src="audio/sound6.wav"/>
+    <audio preload="auto" id="sound7" src="audio/sound7.wav"/>
+    <audio preload="auto" id="sound8" src="audio/sound8.wav"/>
+    <audio preload="auto" id="sound9" src="audio/sound9.wav"/>
+    <audio preload="auto" id="sound10" src="audio/sound10.wav"/>
+    <audio preload="auto" id="sound11" src="audio/sound11.wav"/>
+    <audio preload="auto" id="sound12" src="audio/sound12.wav"/>
+  </body>
+</html>
