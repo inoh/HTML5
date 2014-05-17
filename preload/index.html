@@ -38,6 +38,7 @@
           button.id = i;
           button.textContent = "サウンド" + i;
           button.addEventListener('click', function () {
+            console.log("button click!");
             context.decodeAudioData(queue.getResult("sound" + this.id), function(buffer) {
               playSound(buffer);
             }, function (event) {
