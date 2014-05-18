@@ -17,16 +17,20 @@
     <script>
     var queue = null;
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    var context = new AudioContext();
 
     /**
      * 音楽を再生する
      */
-    function playSound(buffer) {
-      var source = context.createBufferSource(); // creates a sound source
-      source.buffer = buffer;                    // tell the source which sound to play
-      source.connect(context.destination);       // connect the source to the context's destination (the speakers)
-      source.noteOn(0);                          // play the source now
+    function playSound(sound) {
+      var context = new AudioContext();
+      context.decodeAudioData(sound, function(buffer) {
+        var source = context.createBufferSource(); // creates a sound source
+        source.buffer = buffer;                    // tell the source which sound to play
+        source.connect(context.destination);       // connect the source to the context's destination (the speakers)
+        source.noteOn(0);                          // play the source now
+      }, function (event) {
+        console.log(event);
+      });
     }
     /**
      * ロードが終わった後の処理
@@ -39,12 +43,7 @@
           button.id = i;
           button.textContent = "サウンド" + i;
           button.addEventListener('click', function () {
-            console.log("button click!");
-            context.decodeAudioData(queue.getResult("sound" + this.id), function(buffer) {
-              playSound(buffer);
-            }, function (event) {
-              console.log(event);
-            });
+            playSound(queue.getResult("sound" + this.id));
             //queue.getResult("sound" + this.id).play();
           }, false);
           document.body.appendChild(button);
