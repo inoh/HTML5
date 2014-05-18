@@ -23,10 +23,11 @@
     function playSound(sound) {
       var context = new AudioContext();
       context.decodeAudioData(sound, function(buffer) {
-        var source = context.createBufferSource(); // creates a sound source
-        source.buffer = buffer;                    // tell the source which sound to play
-        source.connect(context.destination);       // connect the source to the context's destination (the speakers)
-        source.noteOn(0);                          // play the source now
+        var source = context.createBufferSource();
+        source.buffer = buffer;
+        source.playbackRate.value = 1.0;
+        source.connect(context.destination);
+        source.noteOn(0);
       }, function (event) {
         console.log(event);
       });
