@@ -24,10 +24,14 @@
       var context = new AudioContext();
       context.decodeAudioData(sound, function(buffer) {
         var source = context.createBufferSource();
+        var jsNode = context.createJavaScriptNode(1024, 2, 2);
         source.buffer = buffer;
-        source.playbackRate.value = 1.0;
-        source.connect(context.destination);
         source.noteOn(0);
+        source.connect(jsNode);
+        jsNode.onaudioprocess = function (event) {
+          console.log(event);
+        };
+        jsNode.connect(context.destination);
       }, function (event) {
         console.log(event);
       });
