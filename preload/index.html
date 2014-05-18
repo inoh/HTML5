@@ -16,7 +16,7 @@
     <h1>プリロード版&nbsp;<label id="status"></label> % 読み込みました</h1>
     <script>
     var queue = null;
-    var context = new webkitAudioContext();
+    var context = new AudioContext() || new webkitAudioContext();
 
     /**
      * 音楽を再生する
