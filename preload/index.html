@@ -64,7 +64,7 @@
     /**
      * プレロードする
      */
-    var queue = new createjs.LoadQueue();
+    var queue = new createjs.LoadQueue(true);
     queue.addEventListener('complete', loadComplate);
     queue.addEventListener('progress', function (event) {
       document.getElementById("status").innerHTML = Math.floor(event.loaded * 100);
